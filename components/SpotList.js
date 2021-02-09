@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios';
 import getAuthorizationHeader from '../utils/apiAuth'
+import styles from '../styles/SpotList.module.css'
+import { getDisplayName } from 'next/dist/next-server/lib/utils';
 
-export default function SpotList({ spots, url }) {  
+export default function SpotList({ spots, url }) {
     // State of further spots
     const [moreSpots, setMoreSpots] = useState([]);
 
@@ -32,21 +34,73 @@ export default function SpotList({ spots, url }) {
     }, [moreSpots])
 
     return (
+        <div className={styles.spotlist}>
+            {spots.map(spot =>
+                <Spot spotInfo={spot} key={spot.ID} />
+            )}
+            {moreSpots.map(spot =>
+                <Spot spotInfo={spot} key={spot.ID} />
+            )}
+        </div>
+    )
+}
+
+function Spot({ spotInfo }) {
+    return (
+        <div className={styles.spot}>
+            <SpotPictures pictures={spotInfo.Picture} />
+            <h3>{spotInfo.Name}</h3>
+            <p>{spotInfo.Description}</p>
+            <table className={styles.details}>
+                <tbody>
+                    <tr>
+                        <td valign="top">&#128205;</td>
+                        <td>
+                            <a href={spotInfo.MapUrl || `https://www.google.com/maps?q=${spotInfo.Address}`} target='_blank'>{spotInfo.Address}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">&#128222;</td>
+                        <td>{<a href={`tel:${spotInfo.Phone}`}>{spotInfo.Phone}</a>}</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">&#127759;</td>
+                        <td>{spotInfo.WebsiteUrl ? <a href={spotInfo.WebsiteUrl} target='_blank'>{spotInfo.WebsiteUrl}</a> : '--'}</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">&#128337;</td>
+                        <td>{spotInfo.OpenTime}</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">&#128652;</td>
+                        <td>{spotInfo.TravelInfo || '--'}</td>
+                    </tr>
+                    {!spotInfo.TicketInfo ||
+                        <tr>
+                            <td valign="top">&#127903;</td>
+                            <td>{spotInfo.TicketInfo}</td>
+                        </tr>}
+                    {!spotInfo.Remarks ||
+                        <tr>
+                            <td valign="top">&#9888;</td>
+                            <td>{spotInfo.Remarks}</td>
+                        </tr>}
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
+function SpotPictures({ pictures }) {
+    let pics = [pictures.PictureUrl1, pictures.PictureUrl2, pictures.PictureUrl3];
+    pics = pics.filter(pic => pic);
+    return (
         <>
-            <ul>
-                {spots.map(spot =>
-                    <li key={spot.ID}>
-                        <h3>{spot.Name} ||| {spot.Description}</h3>
-                    </li>
-                )}
-            </ul>
-            <ul>
-                {moreSpots.map(spot =>
-                    <li key={spot.ID}>
-                        <h3>{spot.Name} ||| {spot.Description}</h3>
-                    </li>
-                )}
-            </ul>
+            {
+                pics.map(url =>
+                    <a href={url} key={url} target='_blank'><img src={url} className={styles.picture}></img></a>
+                )
+            }
         </>
     )
 }
