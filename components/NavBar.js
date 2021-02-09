@@ -34,8 +34,8 @@ function CityDropdown() {
 function Logo() {
     return (
         <Link href='/'>
-            <a>
-                <label className={styles.logo}>Tourism</label>
+            <a className={styles.logo}>
+                Tourism
             </a>
         </Link>
     )
