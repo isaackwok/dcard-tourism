@@ -1,0 +1,27 @@
+@media (min-width: 800px) {
+  .spotlist {
+    width: 70vw;
+    margin: auto;
+    padding: 0 1rem 0 1rem;
+  }
+}
+
+.spot {
+  border-bottom: solid rgba(119, 113, 113, 0.226) 1px;
+  padding: 1rem;
+}
+
+.details {
+  color: gray;
+  font-size: 0.9rem;
+  table-layout: auto;
+}
+
+.picture {
+  width: 16rem;
+  height: 12rem;
+  object-fit: cover;
+  object-position: center;
+  margin-right: 1rem;
+  image-rendering: optimizeSpeed;
+}

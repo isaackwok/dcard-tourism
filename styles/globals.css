@@ -12,5 +12,9 @@ a {
 }
 
 * {
-  box-sizing: border-box;
+  text-align: justify;
+}
+
+.main {
+  padding: 1rem;
 }
