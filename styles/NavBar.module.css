@@ -15,7 +15,7 @@
 .dropdown {
     border: none;
     background-color: inherit;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: white;
     outline: none;
     -webkit-appearance: none;
@@ -28,10 +28,11 @@
 
 .dropdownWrapper::after {
     content: '\0025BC';
+    font-size: 1rem;
 }
 
 .logo {
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin-right: 1rem;
     cursor: pointer;
     text-decoration: none;
