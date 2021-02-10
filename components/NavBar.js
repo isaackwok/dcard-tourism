@@ -4,17 +4,23 @@ import styles from '../styles/Navbar.module.css'
 import { useRouter } from 'next/router'
 
 export default function NavBar() {
+    /*
+        Navigation Bar on top of each page.
+        position: sticky
+    */
     return (
         <nav className={styles.container}>
             <Logo />
-            {/* { allCities.map(([cityCode, cityName]) =>
-                <Link href={`/scenicSpot/${cityCode}`} key={cityCode}><a className={styles.linkItem}>{cityName}</a></Link>) } */}
             <CityDropdown />
         </nav>
     )
 };
 
 function CityDropdown() {
+    /*
+        Dropdown list for switching between different city.
+        Each value of the dropdown list is the relative path of specific city.
+    */
     const router = useRouter();
     const handleDropdownChanged = (e) => {
         const destinationRoute = e.target.value;
@@ -32,6 +38,9 @@ function CityDropdown() {
 }
 
 function Logo() {
+    /*
+        Logo to be shown on the left side of NavBar
+    */
     return (
         <Link href='/'>
             <a className={styles.logo}>
