@@ -5,19 +5,31 @@ import styles from '../styles/SpotList.module.css'
 import { getDisplayName } from 'next/dist/next-server/lib/utils';
 
 export default function SpotList({ spots, url }) {
+    /*
+        A list of spots for specific city.
+        Props
+            spots: array of spots info (e.g. Name, Description, ...)
+            url: baseUrl for fetching more spots
+    */
+
     // State of further spots
     const [moreSpots, setMoreSpots] = useState([]);
+    // State of whether reached the end and no more spots.
+    const [isEndOfList, setEndOfList] = useState(false);
 
     //Effect for fetching spots when user scroll to the bottom of page.
     //Trigger every time when moreSpots has changed.
     useEffect(() => {
         const getMoreSpots = () => {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            if (!isEndOfList && (window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
                 axios.get(`${url}&$skip=${moreSpots.length + 30}`, {
                     headers: getAuthorizationHeader(),
                 }).then(response => {
                     const spotsData = response.data;
-                    setMoreSpots(oldSpots => [...oldSpots, ...spotsData]);
+                    if (spotsData.length > 0)
+                        setMoreSpots(oldSpots => [...oldSpots, ...spotsData]);
+                    else
+                        setEndOfList(true);
                 }).catch(err => console.error(err));
 
                 //Remove EventListener once user arrived bottom of page.
@@ -41,11 +53,20 @@ export default function SpotList({ spots, url }) {
             {moreSpots.map(spot =>
                 <Spot spotInfo={spot} key={spot.ID} />
             )}
+            {isEndOfList || <div className={styles.loadmorePlaceholder}>下滑以查看更多</div>}
         </div>
     )
 }
 
 function Spot({ spotInfo }) {
+    /*
+        Spot item in the spot list.
+        Props
+            spotInfo: spots info (e.g. Name, Description, ...)
+    */
+    useEffect(() => {
+        console.log('rerender');
+    });
     return (
         <div className={styles.spot}>
             <SpotPictures pictures={spotInfo.Picture} />
@@ -92,8 +113,12 @@ function Spot({ spotInfo }) {
 }
 
 function SpotPictures({ pictures }) {
+    // Unzip Picture Object.
     let pics = [pictures.PictureUrl1, pictures.PictureUrl2, pictures.PictureUrl3];
-    pics = pics.filter(pic => pic);
+
+    // Get set of picture url(some of the url provided by API are duplicated)
+    // and filter empty string result.
+    pics = [...new Set(pics)].filter(pic => pic);
     return (
         <>
             {
