@@ -64,9 +64,6 @@ function Spot({ spotInfo }) {
         Props
             spotInfo: spots info (e.g. Name, Description, ...)
     */
-    useEffect(() => {
-        console.log('rerender');
-    });
     return (
         <div className={styles.spot}>
             <SpotPictures pictures={spotInfo.Picture} />
