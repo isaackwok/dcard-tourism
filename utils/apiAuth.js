@@ -2,8 +2,8 @@ import jsSHA from 'jssha';
 
 const getAuthorizationHeader = () => {
     // Get authorization header for MOTC API. 
-    let AppID = '947333329b9a4c99adc478a8c12c3aa3';
-    let AppKey = 'un_vUIhkEV9MEwUC5P3A8PLIZm0';
+    let AppID = process.env.APP_ID;
+    let AppKey = process.env.API_KEY;
 
     let GMTString = new Date().toGMTString();
     let ShaObj = new jsSHA('SHA-1', 'TEXT');
