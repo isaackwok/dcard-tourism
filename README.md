@@ -14,12 +14,14 @@ export APP_ID=947333329b9a4c99adc478a8c12c3aa3
 export API_KEY=un_vUIhkEV9MEwUC5P3A8PLIZm0
 ```
 
-3. Then, run the development server:
+3. Then, build the project and start the server:
 
 ```bash
-npm run dev
+npm run build
+npm run start
 # or
-yarn dev
+yarn build
+yarn start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
