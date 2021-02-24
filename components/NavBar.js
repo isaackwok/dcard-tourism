@@ -29,6 +29,7 @@ function CityDropdown() {
     return (
         <div className={styles.dropdownWrapper}>
             <select className={styles.dropdown} onChange={handleDropdownChanged} value={`/scenicSpot/${router.query.city || ''}`}>
+                <option key='notselected' value='notselected' disabled>選擇縣市</option>
                 <option key='All' value='/scenicSpot/'>全部</option>
                 {allCities.map(([cityCode, cityName]) =>
                     <option key={cityCode} value={`/scenicSpot/${cityCode}`}>{cityName}</option>)}

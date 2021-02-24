@@ -12,6 +12,7 @@ function MyApp({ Component, pageProps }) {
       <NavBar />
       <div className='main'>
         <Component {...pageProps} />
+        <div className='backToTop'><a href='#'>&#10514;</a></div>
       </div>
     </>
   )
